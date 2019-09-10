@@ -12,3 +12,6 @@ excel转换相关
 时间工具
 ## yaml_merge
 yaml文件的合并，打包项目的时候用
+
+#开发备注
+添加新的引用时，需要运行命令go mod tidy

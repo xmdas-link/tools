@@ -1,9 +1,9 @@
 package main
 
 import (
-	"dcx.com/tools/yaml_merge"
 	"flag"
 	"fmt"
+	"github.com/xmdas-link/tools/yaml_merge"
 	"log"
 	"os"
 	"strings"
@@ -19,7 +19,6 @@ var (
 func main() {
 
 	flagSet.Parse(os.Args[1:])
-
 	m := yaml_merge.New()
 
 	files := []string{}
