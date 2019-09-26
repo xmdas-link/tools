@@ -145,3 +145,17 @@ func (y *YamlConfigs) YamlToByte() ([]byte, error) {
 	}
 	return data, nil
 }
+
+func YamlByteToMap(out []byte, data interface{}) error {
+	// 转json
+	jsonBytes, jsonErr := yaml.YAMLToJSON(out)
+	if jsonErr != nil {
+		return jsonErr
+	}
+
+	// 将JSON转map
+	if err := json.Unmarshal(jsonBytes, data); err != nil {
+		return err
+	}
+	return nil
+}
