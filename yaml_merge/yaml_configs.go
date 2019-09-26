@@ -124,3 +124,24 @@ func (y *YamlConfigs) SaveAs(file string) error {
 
 	return nil
 }
+
+func (y *YamlConfigs) YamlToByte() ([]byte, error) {
+	var data []byte
+
+	if y.data == nil {
+		return data, errors.New("没有可以输出的内容")
+	}
+
+	// map转JSON
+	jsonBytes, jsonErr := json.Marshal(y.data)
+	if jsonErr != nil {
+		return data, jsonErr
+	}
+
+	// JSON转YAML
+	data, yamlErr := yaml.JSONToYAML(jsonBytes)
+	if yamlErr != nil {
+		return data, yamlErr
+	}
+	return data, nil
+}
