@@ -11,10 +11,6 @@ const Layout_YMD_HIS = "2006-01-02 15:04:05"
 const Layout_YYYY_MM = "2006-01"
 const Layout_YMD = "2006-01-02"
 
-var (
-	location *time.Location
-)
-
 type DateTime time.Time
 
 func (t DateTime) MarshalJSON() ([]byte, error) {
@@ -29,21 +25,16 @@ func (t DateTime) MarshalJSON() ([]byte, error) {
 }
 
 func init() {
-	l, err := time.LoadLocation("Asia/Shanghai")
-	if err != nil {
-		panic(err)
-	}
 
-	location = l
 }
 
 func Parse(layout string, timeStr string) (time.Time, error) {
-	t, err := time.ParseInLocation(layout, timeStr, location)
+	t, err := time.ParseInLocation(layout, timeStr, time.Local)
 	return t, err
 }
 
 func ParseDateYMD(timeStr string) (time.Time, error) {
-	t, err := time.ParseInLocation(Layout_YYYY_MM_DD, timeStr, location)
+	t, err := time.ParseInLocation(Layout_YYYY_MM_DD, timeStr, time.Local)
 	return t, err
 }
 
