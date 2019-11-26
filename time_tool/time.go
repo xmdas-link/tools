@@ -38,6 +38,11 @@ func ParseDateYMD(timeStr string) (time.Time, error) {
 	return t, err
 }
 
+func ParseTimeDefault(timeStr string) (time.Time, error) {
+	t, err := time.ParseInLocation(Layout_YMD_HIS, timeStr, time.Local)
+	return t, err
+}
+
 func ParseDate(format string, date string, defaultTime time.Time) time.Time {
 	if t, err := Parse(format, date); err == nil {
 		return t
