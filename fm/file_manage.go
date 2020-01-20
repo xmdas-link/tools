@@ -62,7 +62,7 @@ func GetFileString(folder string, fileName string) (string, error) {
 
 func GetWebPath() string {
 	if fileManage != nil {
-		return fileManage.GetWebPath()
+		return fileManage.GetWebPath() + basePath
 	}
 	return ""
 }
