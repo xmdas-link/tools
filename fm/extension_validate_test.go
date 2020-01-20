@@ -22,37 +22,37 @@ func TestIsFileNameType(t *testing.T) {
 	)
 
 	for _, f := range imageFile {
-		if IsFileNameType(f, ExtendsImage) != true {
+		if IsFileNameType(f, TypePng, TypeJpg) != true {
 			t.Errorf("%s应该是一张图片，但是结果否", f)
 		}
-		if IsFileNameType(f, ExtendsWord) != false {
+		if IsFileNameType(f, TypeDoc, TypeDocx) != false {
 			t.Errorf("%s应该不是word文件，但是结果是", f)
 		}
-		if IsFileNameType(f, ExtendsExcel) != false {
+		if IsFileNameType(f, TypeXls, TypeXlsx) != false {
 			t.Errorf("%s应该不是excel文件，但是结果是", f)
 		}
 	}
 
 	for _, f := range wordFile {
-		if IsFileNameType(f, ExtendsImage) != false {
+		if IsFileNameType(f, TypePng, TypeJpg) != false {
 			t.Errorf("%s应该不是一张图片，但是结果是", f)
 		}
-		if IsFileNameType(f, ExtendsWord) != true {
+		if IsFileNameType(f, TypeDoc, TypeDocx) != true {
 			t.Errorf("%s应该是word文件，但是结果否", f)
 		}
-		if IsFileNameType(f, ExtendsExcel) != false {
+		if IsFileNameType(f, TypeXls, TypeXlsx) != false {
 			t.Errorf("%s应该不是excel文件，但是结果是", f)
 		}
 	}
 
 	for _, f := range excelFile {
-		if IsFileNameType(f, ExtendsImage) != false {
+		if IsFileNameType(f, TypePng, TypeJpg) != false {
 			t.Errorf("%s应该不是一张图片，但是结果是", f)
 		}
-		if IsFileNameType(f, ExtendsWord) != false {
+		if IsFileNameType(f, TypeDoc, TypeDocx) != false {
 			t.Errorf("%s应该不是word文件，但是结果是", f)
 		}
-		if IsFileNameType(f, ExtendsExcel) != true {
+		if IsFileNameType(f, TypeXls, TypeXlsx) != true {
 			t.Errorf("%s应该是excel文件，但是结果否", f)
 		}
 	}

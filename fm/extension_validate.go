@@ -14,18 +14,8 @@ const (
 	TypeXlsx = "xlsx"
 )
 
-var ExtendsWord = []string{
-	TypeDoc, TypeDocx,
-}
-var ExtendsImage = []string{
-	TypePng, TypeJpg,
-}
-var ExtendsExcel = []string{
-	TypeXls, TypeXlsx,
-}
-
 // 文件扩展名检查
-func IsFileNameType(fileName string, extends []string) bool {
+func IsFileNameType(fileName string, extends ...string) bool {
 
 	var (
 		fileArr = strings.Split(fileName, ".")
@@ -43,15 +33,23 @@ func IsFileNameType(fileName string, extends []string) bool {
 
 // 是否word文件
 func IsWordFile(file *multipart.FileHeader) bool {
-	return IsFileNameType(file.Filename, ExtendsWord)
+	return IsFileNameType(file.Filename, TypeDoc, TypeDocx)
 }
 
 // 是否是Excel文件
 func IsExcelFile(file *multipart.FileHeader) bool {
-	return IsFileNameType(file.Filename, ExtendsExcel)
+	return IsFileNameType(file.Filename, TypeXls, TypeXlsx)
 }
 
 // 是否是图片文件
 func IsImageFile(file *multipart.FileHeader) bool {
-	return IsFileNameType(file.Filename, ExtendsImage)
+	return IsFileNameType(file.Filename, TypePng, TypeJpg)
+}
+
+func IsPngFile(file *multipart.FileHeader) bool {
+	return IsFileNameType(file.Filename, TypePng)
+}
+
+func IsJpgFile(file *multipart.FileHeader) bool {
+	return IsFileNameType(file.Filename, TypeJpg)
 }
