@@ -31,6 +31,22 @@ func IsFileNameType(fileName string, extends ...string) bool {
 	return false
 }
 
+// 检查文件扩展名是否在允许范围，并返回
+func CheckFileType(fileName string, extends ...string) string {
+	var (
+		fileArr = strings.Split(fileName, ".")
+		extend  = strings.ToLower(fileArr[len(fileArr)-1])
+	)
+
+	for _, e := range extends {
+		if extend == e {
+			return extend
+		}
+	}
+
+	return ""
+}
+
 // 是否word文件
 func IsWordFile(file *multipart.FileHeader) bool {
 	return IsFileNameType(file.Filename, TypeDoc, TypeDocx)
