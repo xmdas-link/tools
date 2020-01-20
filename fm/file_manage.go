@@ -8,6 +8,7 @@ import (
 
 var (
 	fileManage FileManage
+	basePath   string
 )
 
 // 文件管理
@@ -24,11 +25,15 @@ func SetFileManage(m FileManage) {
 	fileManage = m
 }
 
+func SetBasePath(b string) {
+	basePath = b
+}
+
 func AddFileFromRequest(folder string, fileName string, file *multipart.FileHeader) error {
 	if f, err := file.Open(); err != nil {
 		return err
 	} else {
-		return AddFile(folder, fileName, f)
+		return AddFile(basePath+folder, fileName, f)
 	}
 }
 
@@ -36,19 +41,19 @@ func AddFile(folder string, fileName string, file io.Reader) error {
 	if fileManage == nil {
 		return errors.New("FileManage未初始化")
 	}
-	return fileManage.AddFile(folder, fileName, file)
+	return fileManage.AddFile(basePath+folder, fileName, file)
 }
 
 func GetFile(folder string, fileName string) ([]byte, error) {
 	if fileManage == nil {
 		return nil, errors.New("FileManage未初始化")
 	}
-	return fileManage.GetFile(folder, fileName)
+	return fileManage.GetFile(basePath+folder, fileName)
 
 }
 
 func GetFileString(folder string, fileName string) (string, error) {
-	ret, err := GetFile(folder, fileName)
+	ret, err := GetFile(basePath+folder, fileName)
 	if err != nil {
 		return "", err
 	}
