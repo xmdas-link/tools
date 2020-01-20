@@ -9,7 +9,8 @@ const (
 	TypeDoc  = "doc"
 	TypeDocx = "docx"
 	TypePng  = "png"
-	TypeJpg  = "jpeg"
+	TypeJpeg = "jpeg"
+	TypeJpg  = "jpg"
 	TypeXls  = "xls"
 	TypeXlsx = "xlsx"
 )
@@ -59,7 +60,7 @@ func IsExcelFile(file *multipart.FileHeader) bool {
 
 // 是否是图片文件
 func IsImageFile(file *multipart.FileHeader) bool {
-	return IsFileNameType(file.Filename, TypePng, TypeJpg)
+	return IsFileNameType(file.Filename, TypePng, TypeJpg, TypeJpeg)
 }
 
 func IsPngFile(file *multipart.FileHeader) bool {
@@ -67,5 +68,5 @@ func IsPngFile(file *multipart.FileHeader) bool {
 }
 
 func IsJpgFile(file *multipart.FileHeader) bool {
-	return IsFileNameType(file.Filename, TypeJpg)
+	return IsFileNameType(file.Filename, TypeJpg, TypeJpeg)
 }
