@@ -29,6 +29,9 @@ func SetBasePath(b string) {
 	basePath = b
 }
 
+/**
+ * 从gin的请求中直接拿file文件
+ */
 func AddFileFromRequest(folder string, fileName string, file *multipart.FileHeader) error {
 	if f, err := file.Open(); err != nil {
 		return err
@@ -37,6 +40,9 @@ func AddFileFromRequest(folder string, fileName string, file *multipart.FileHead
 	}
 }
 
+/**
+ * 从io中拿file文件
+ */
 func AddFile(folder string, fileName string, file io.Reader) error {
 	if fileManage == nil {
 		return errors.New("FileManage未初始化")
@@ -44,6 +50,9 @@ func AddFile(folder string, fileName string, file io.Reader) error {
 	return fileManage.AddFile(basePath+folder, fileName, file)
 }
 
+/**
+ * 获取文件
+ */
 func GetFile(folder string, fileName string) ([]byte, error) {
 	if fileManage == nil {
 		return nil, errors.New("FileManage未初始化")
@@ -52,6 +61,9 @@ func GetFile(folder string, fileName string) ([]byte, error) {
 
 }
 
+/**
+ * 以字符串的格式获取文件
+ */
 func GetFileString(folder string, fileName string) (string, error) {
 	ret, err := GetFile(folder, fileName)
 	if err != nil {
