@@ -78,6 +78,21 @@ func (m *Module) AddFile(folder string, fileName string, file io.Reader) error {
 	return nil
 }
 
+func (m *Module) GetFile(folder string, fileName string) ([]byte, error) {
+
+	// 实际url地址
+	var fileUrl = m.VisitHost + folder + "/" + fileName
+	resp, err := http.Get(fileUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	return ioutil.ReadAll(resp.Body)
+
+}
+
 func New(url string, vHost string) *Module {
 	m := &Module{
 		Url:       url,

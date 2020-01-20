@@ -16,6 +16,8 @@ type FileManage interface {
 	AddFile(folder string, fileName string, file io.Reader) error
 	// 读取web访问路径
 	GetWebPath() string
+	// 读取文件
+	GetFile(folder string, fileName string) ([]byte, error)
 }
 
 func SetFileManage(m FileManage) {
@@ -35,6 +37,22 @@ func AddFile(folder string, fileName string, file io.Reader) error {
 		return errors.New("FileManage未初始化")
 	}
 	return fileManage.AddFile(folder, fileName, file)
+}
+
+func GetFile(folder string, fileName string) ([]byte, error) {
+	if fileManage == nil {
+		return nil, errors.New("FileManage未初始化")
+	}
+	return fileManage.GetFile(folder, fileName)
+
+}
+
+func GetFileString(folder string, fileName string) (string, error) {
+	ret, err := GetFile(folder, fileName)
+	if err != nil {
+		return "", err
+	}
+	return string(ret), nil
 }
 
 func GetWebPath() string {

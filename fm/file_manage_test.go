@@ -1,6 +1,7 @@
 package fm
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/xmdas-link/tools/fm/upload_server"
 	"os"
@@ -48,4 +49,22 @@ func TestAddFileFromRequest(t *testing.T) {
 		t.Error(err)
 	}
 
+}
+
+func TestGetFileString(t *testing.T) {
+	var (
+		url = "http://192.168.0.116:11801/upload"
+		web = "http://192.168.0.116:1180/"
+	)
+
+	// 设置文件上传配置
+	uploadServer := upload_server.New(url, web)
+	SetFileManage(uploadServer)
+
+	ret, err := GetFileString("edu/fzcszx/张三_1/math1fzcszx20200120144907iGf", "exam.json")
+	if err != nil {
+		t.Error(err)
+	}
+
+	fmt.Print(ret)
 }
