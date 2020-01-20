@@ -48,12 +48,12 @@ func GetFile(folder string, fileName string) ([]byte, error) {
 	if fileManage == nil {
 		return nil, errors.New("FileManage未初始化")
 	}
-	return fileManage.GetFile(folder, fileName)
+	return fileManage.GetFile(basePath+folder, fileName)
 
 }
 
 func GetFileString(folder string, fileName string) (string, error) {
-	ret, err := GetFile(basePath+folder, fileName)
+	ret, err := GetFile(folder, fileName)
 	if err != nil {
 		return "", err
 	}
