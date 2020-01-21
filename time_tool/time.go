@@ -2,6 +2,7 @@ package time_tool
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -10,6 +11,9 @@ const Layout_YMDHIS = "20060102150405"
 const Layout_YMD_HIS = "2006-01-02 15:04:05"
 const Layout_YYYY_MM = "2006-01"
 const Layout_YMD = "2006-01-02"
+const Layout_YYYYMMDD = "20060102"
+const Layout_YYYYMM = "200601"
+const Layout_Nanosecond = "20060102150405.000000000"
 
 type DateTime time.Time
 
@@ -26,6 +30,10 @@ func (t DateTime) MarshalJSON() ([]byte, error) {
 
 func init() {
 
+}
+
+func GetNanoSeconds() string {
+	return strings.Replace(time.Now().Format(Layout_Nanosecond), ".", "", 1)
 }
 
 func Parse(layout string, timeStr string) (time.Time, error) {

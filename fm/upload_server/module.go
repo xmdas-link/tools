@@ -89,6 +89,10 @@ func (m *Module) GetFile(folder string, fileName string) ([]byte, error) {
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, errors.New("获取解析文件失败")
+	}
+
 	return ioutil.ReadAll(resp.Body)
 
 }
