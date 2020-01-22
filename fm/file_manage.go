@@ -36,7 +36,7 @@ func AddFileFromRequest(folder string, fileName string, file *multipart.FileHead
 	if f, err := file.Open(); err != nil {
 		return err
 	} else {
-		return AddFile(basePath+folder, fileName, f)
+		return AddFile(folder, fileName, f)
 	}
 }
 
