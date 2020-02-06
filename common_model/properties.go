@@ -7,8 +7,8 @@ import (
 )
 
 type Property struct {
-	Name  string
-	Value string
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
 type Properties []Property
