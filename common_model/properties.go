@@ -11,7 +11,7 @@ type Property struct {
 	Value string `json:"value"`
 }
 
-type Properties []Property
+type Properties []*Property
 
 func (p *Properties) Scan(value interface{}) error {
 	switch v := value.(type) {
