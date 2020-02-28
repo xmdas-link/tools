@@ -22,7 +22,7 @@ func (g Gzip) Zip(original string) (string, error) {
 
 	var buf bytes.Buffer
 	w := gzip.NewWriter(&buf)
-	defer w.Close()
+	w.Close()
 	if _, err := w.Write([]byte(original)); err != nil {
 		return "", err
 	}
