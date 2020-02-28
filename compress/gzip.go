@@ -22,10 +22,11 @@ func (g Gzip) Zip(original string) (string, error) {
 
 	var buf bytes.Buffer
 	w := gzip.NewWriter(&buf)
-	w.Close()
 	if _, err := w.Write([]byte(original)); err != nil {
+		w.Close()
 		return "", err
 	}
+	w.Close()
 
 	return base64.StdEncoding.EncodeToString(buf.Bytes()), nil
 }
