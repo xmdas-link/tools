@@ -32,6 +32,7 @@ func NewEncrypt(alg, content string) (*Encrypt, error) {
 	}, nil
 }
 
+// hash并转为16进制字符串
 func (e *Encrypt) Crypto() (string, error) {
 	if len(e.Content) == 0 {
 		return "", nil
@@ -43,6 +44,20 @@ func (e *Encrypt) Crypto() (string, error) {
 	}
 
 	return alg.encode(e.Content), nil
+}
+
+// hash
+func (e *Encrypt) Hash() ([]byte, error) {
+	if len(e.Content) == 0 {
+		return nil, nil
+	}
+
+	alg, err := e.algFactory()
+	if err != nil {
+		return nil, err
+	}
+
+	return alg.hash(e.Content), nil
 }
 
 func (e *Encrypt) algFactory() (encrypt, error) {

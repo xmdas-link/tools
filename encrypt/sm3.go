@@ -13,3 +13,8 @@ func (s *algSm3) encode(content string) string {
 	sum := sm3.Sum([]byte(content))
 	return fmt.Sprintf("%x", sum)
 }
+
+func (s *algSm3) hash(content string) []byte {
+	sum := sm3.Sum([]byte(content))
+	return sum[:]
+}
