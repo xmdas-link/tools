@@ -1,6 +1,9 @@
 package string_tool
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestFormatMac(t *testing.T) {
 	var (
@@ -35,4 +38,14 @@ func TestFormatMac(t *testing.T) {
 	if mac, err := FormatMac(mac6); err == nil {
 		t.Errorf("应该无法生成mac地址，但是确得到%v", mac)
 	}
+}
+
+func TestRandom(t *testing.T) {
+
+	for i := 0; i < 1000; i++ {
+		fmt.Println(GetRandomString(10))
+		fmt.Println(GetRandomNumber(20))
+		fmt.Println(GetRandomChar(30))
+	}
+
 }

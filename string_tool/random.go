@@ -2,41 +2,67 @@ package string_tool
 
 import (
 	"math/rand"
-	"time"
 )
 
-func GetRandomString(length int) string {
-	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	bytes := []byte(str)
-	result := make([]byte, length)
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := 0; i < length; i++ {
-		result[i] = bytes[r.Intn(len(bytes))]
-		//result = append(result, bytes[r.Intn(len(bytes))])
+const (
+	letterBytes   = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	letterIdxBits = 6
+	letterIdxMask = 1<<letterIdxBits - 1
+	letterIdxMax  = 63 / letterIdxBits
+	numberBytes   = "0123456789"
+	numberIdxBits = 6
+	numberIdxMask = 1<<numberIdxBits - 1
+	numberIdxMax  = (len(numberBytes) + 1) / numberIdxBits
+	charBytes     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	charIdxBits   = 6
+	charIdxMask   = 1<<charIdxBits - 1
+	charIdxMax    = (len(charBytes) + 1) / charIdxBits
+)
+
+func GetRandomString(n int) string {
+	b := make([]byte, n)
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
+			b[i] = letterBytes[idx]
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
 	}
-	return string(result)
+	return string(b)
 }
 
-func GetRandomNumber(length int) string {
-	str := "0123456789"
-	bytes := []byte(str)
-	result := make([]byte, length)
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := 0; i < length; i++ {
-		result[i] = bytes[r.Intn(len(bytes))]
-		//result = append(result, bytes[r.Intn(len(bytes))])
+func GetRandomNumber(n int) string {
+	b := make([]byte, n)
+	for i, cache, remain := n-1, rand.Int63(), numberIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), numberIdxMax
+		}
+		if idx := int(cache & numberIdxMask); idx < len(numberBytes) {
+			b[i] = numberBytes[idx]
+			i--
+		}
+		cache >>= numberIdxBits
+		remain--
 	}
-	return string(result)
+	return string(b)
 }
 
-func GetRandomChar(length int) string {
-	str := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	bytes := []byte(str)
-	result := make([]byte, length)
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := 0; i < length; i++ {
-		result[i] = bytes[r.Intn(len(bytes))]
-		//result = append(result, bytes[r.Intn(len(bytes))])
+func GetRandomChar(n int) string {
+	b := make([]byte, n)
+	for i, cache, remain := n-1, rand.Int63(), charIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), charIdxMax
+		}
+		if idx := int(cache & charIdxMask); idx < len(charBytes) {
+			b[i] = charBytes[idx]
+			i--
+		}
+		cache >>= charIdxBits
+		remain--
 	}
-	return string(result)
+	return string(b)
 }
