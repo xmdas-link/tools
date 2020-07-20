@@ -1,22 +1,25 @@
 package string_tool
 
 import (
+	"fmt"
 	"math/rand"
+	"time"
 )
 
 const (
-	letterBytes   = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	letterIdxBits = 6
-	letterIdxMask = 1<<letterIdxBits - 1
-	letterIdxMax  = 63 / letterIdxBits
-	numberBytes   = "0123456789"
-	numberIdxBits = 6
-	numberIdxMask = 1<<numberIdxBits - 1
-	numberIdxMax  = (len(numberBytes) + 1) / numberIdxBits
-	charBytes     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	charIdxBits   = 6
-	charIdxMask   = 1<<charIdxBits - 1
-	charIdxMax    = (len(charBytes) + 1) / charIdxBits
+	letterBytes       = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	letterIdxBits     = 6
+	letterIdxMask     = 1<<letterIdxBits - 1
+	letterIdxMax      = 63 / letterIdxBits
+	numberBytes       = "0123456789"
+	numberIdxBits     = 6
+	numberIdxMask     = 1<<numberIdxBits - 1
+	numberIdxMax      = (len(numberBytes) + 1) / numberIdxBits
+	charBytes         = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	charIdxBits       = 6
+	charIdxMask       = 1<<charIdxBits - 1
+	charIdxMax        = (len(charBytes) + 1) / charIdxBits
+	ISO_TIME_FORMAT_3 = "20060102150405.000000000"
 )
 
 func GetRandomString(n int) string {
@@ -65,4 +68,8 @@ func GetRandomChar(n int) string {
 		remain--
 	}
 	return string(b)
+}
+
+func GetRandomWithTime(n int) string {
+	return fmt.Sprint(time.Now().Format(ISO_TIME_FORMAT_3), GetRandomString(n))
 }
