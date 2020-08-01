@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -16,6 +17,7 @@ import (
  */
 type Module struct {
 	Url       string
+	CopyUrl   string
 	VisitHost string
 }
 
@@ -95,6 +97,42 @@ func (m *Module) GetFile(folder string, fileName string) ([]byte, error) {
 
 	return ioutil.ReadAll(resp.Body)
 
+}
+
+func (m *Module) CopyFile(fromPath string, toPath string, newFileName string) error {
+	if len(m.CopyUrl) == 0 {
+		return errors.New("未配置CopyUrl")
+	}
+
+	var (
+		params = url.Values{}
+	)
+
+	params.Add("from", fromPath)
+	params.Add("to", toPath)
+	params.Add("file_name", newFileName)
+
+	resp, err := http.PostForm(m.CopyUrl, params)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	content, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	ret := &UploadResult{}
+	if err := json.Unmarshal(content, ret); err != nil {
+		return err
+	}
+
+	if ret.Ret != 1 {
+		return errors.New(ret.Error)
+	}
+
+	return nil
 }
 
 func New(url string, vHost string) *Module {

@@ -19,6 +19,8 @@ type FileManage interface {
 	GetWebPath() string
 	// 读取文件
 	GetFile(folder string, fileName string) ([]byte, error)
+	// 复制文件
+	CopyFile(fromPath string, toPath string, newFileName string) error
 }
 
 func SetFileManage(m FileManage) {
@@ -77,4 +79,11 @@ func GetWebPath() string {
 		return fileManage.GetWebPath() + basePath
 	}
 	return ""
+}
+
+func CopyFile(fromPath string, toPath string, newFileName string) error {
+	if fileManage == nil {
+		return errors.New("FileManage未初始化")
+	}
+	return fileManage.CopyFile(basePath+fromPath, basePath+toPath, newFileName)
 }
