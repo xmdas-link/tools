@@ -70,3 +70,7 @@ func FormatTimeStamp(format string, timestamp int64) string {
 
 	return dateTime.Format(format)
 }
+
+func GetToday() string {
+	return time.Now().Format(Layout_YYYYMMDD)
+}
