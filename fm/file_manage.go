@@ -21,6 +21,8 @@ type FileManage interface {
 	GetFile(folder string, fileName string) ([]byte, error)
 	// 复制文件
 	CopyFile(fromPath string, toPath string, newFileName string) error
+	// 添加临时文件
+	UploadTempFile(fileName string, file io.Reader) (download string, err error)
 }
 
 func SetFileManage(m FileManage) {

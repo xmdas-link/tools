@@ -55,7 +55,7 @@ func (m *Module) AddFile(folder string, fileName string, file io.Reader) error {
 	req.Header.Add("Content-Type", writer.FormDataContentType())
 
 	client := &http.Client{
-		Timeout: 3 * time.Second,
+		Timeout: 30 * time.Second,
 	}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -133,6 +133,59 @@ func (m *Module) CopyFile(fromPath string, toPath string, newFileName string) er
 	}
 
 	return nil
+}
+
+func (m *Module) UploadTempFile(fileName string, file io.Reader) (download string, err error) {
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+
+	formFile, err := writer.CreateFormFile("file", fileName)
+	if err != nil {
+		return "", err
+	}
+
+	_, err = io.Copy(formFile, file)
+	if err != nil {
+		return "", err
+	}
+
+	writer.WriteField("file_name", fileName)
+
+	err = writer.Close()
+	if err != nil {
+		return "", err
+	}
+
+	req, err := http.NewRequest("POST", m.Url, body)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Add("Content-Type", writer.FormDataContentType())
+
+	client := &http.Client{
+		Timeout: 3 * time.Second,
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	content, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	ret := &UploadResult{}
+	if err := json.Unmarshal(content, ret); err != nil {
+		return "", err
+	}
+
+	if ret.Ret != 1 {
+		return "", errors.New(ret.Error)
+	}
+
+	return ret.Url, nil
 }
 
 func New(url string, vHost string) *Module {
